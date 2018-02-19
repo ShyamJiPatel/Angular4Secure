@@ -1,0 +1,165 @@
+<div class="w3-row">
+	<div class="w3-col m12 l7 w3-padding" *ngIf="projects && projects.length==0">
+		<p>You have not added any project till now.</p>
+		<p>You can &nbsp;<a (click)="addProjectPage()" title="Add" class="w3-large"><i class="glyphicon glyphicon-plus w3-text-green"></i>Add</a>&nbsp; project from here.</p>
+	</div>
+	<div class="w3-col m12 l7 w3-padding" *ngIf="projects && projects.length>0">
+		<div class="w3-large">
+			<p>All Projects</p>
+		</div>
+		<div class="w3-responsive">
+			<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
+				<thead>
+					<tr class="w3-row">
+						<th class="w3-col m4 l4"><input class="w3-input w3-text-red"
+							type="text" [(ngModel)]="searchData.name" placeholder="Name"></th>
+						<th class="w3-col m5 l5"><input class="w3-input w3-text-red"
+							type="text" [(ngModel)]="searchData.description" placeholder="Description"></th>
+						<th class="w3-col m2 l2 w3-large w3-center">
+							<a (click)="addProjectPage()" title="Add"><i class="glyphicon glyphicon-plus w3-text-green"></i></a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="w3-row" *ngFor="let project of projects | projectfilter : searchData">
+						<td class="w3-col m4 l4" scope="row">{{project.name}}</td>
+						<td class="w3-col m5 l5">{{project.description}}</td>
+						<td class="w3-col m2 l2 w3-padding w3-small w3-center">
+							<a (click)="deleteProject(project.id)" title="Delete"><i class="glyphicon glyphicon-trash w3-text-red"></i></a>&nbsp; &nbsp; 
+							<a (click)="editProjectPage(project)" title="Edit"><i class="glyphicon glyphicon-pencil w3-text-blue"></i></a>&nbsp; &nbsp; 
+							<a (click)="detailProjectPage(project)" title="Detail"><i class="glyphicon glyphicon-th w3-text-green"></i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="w3-col m12 l5 w3-padding">
+	
+		<!-- Add project -->
+		<div class="w3-row" *ngIf="addMode">				
+			<div class="w3-col m6 l6" *ngIf="submitted">
+				<h5>Project added successfully!</h5>
+				<div class="w3-row">
+				  <button class="w3-btn w3-blue" (click)="goBack()">Back</button>
+				  <button class="w3-btn w3-green" (click)="addProjectPage()">Add New</button>
+				</div>
+			</div>
+			<div class="w3-col m6 l6" *ngIf="!submitted">
+				<div class="w3-large">
+					<p>Add Project</p>
+				</div>
+				<form class="form w3-border" (ngSubmit)="saveProject()">
+					<p>
+						<input type="text" class="w3-input" required
+							placeholder="Enter project name" [(ngModel)]="project.name" [ngModelOptions]="{standalone: true}" />
+					</p>
+
+					<p>
+						<input type="text" class="w3-input" required
+							placeholder="Enter description" [(ngModel)]="project.description" [ngModelOptions]="{standalone: true}" />
+					</p>
+
+					<div class="w3-row w3-margin-top">
+						<div class="w3-col m4 l4">
+							<a (click)="cancel()" class="w3-btn w3-red w3-block">Cancel</a>
+						</div>
+						<div class="w3-col m4 l4">
+							<button type="button"
+								class="w3-btn w3-orange w3-text-white w3-block" (click)="clear()">Clear</button>
+						</div>
+						<div class="w3-col m4 l4">
+							<button type="submit" class="w3-btn w3-green w3-block">Add</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<!-- Update project -->
+		<div class="w3-row" *ngIf="updateMode">				
+			<div class="w3-col m6 l6" *ngIf="submitted">
+				<h5>Project updated successfully!</h5>
+				<div class="w3-row">
+				  <button class="w3-btn w3-blue" (click)="goBack()">Back</button>
+				</div>
+			</div>
+			<div class="w3-col m6 l6" *ngIf="!submitted">
+				<div class="w3-large">
+					<p>Update Project</p>
+				</div>
+				<form class="form w3-border" (ngSubmit)="updateProject()">
+					<p>
+						<input type="text" class="w3-input" required
+							placeholder="Enter project name" [(ngModel)]="project.name" [ngModelOptions]="{standalone: true}" />
+					</p>
+
+					<p>
+						<input type="text" class="w3-input" required
+							placeholder="Enter description" [(ngModel)]="project.description" [ngModelOptions]="{standalone: true}" />
+					</p>
+
+					<div class="w3-row w3-margin-top">
+						<div class="w3-col m4 l4">
+							<a (click)="cancel()" class="w3-btn w3-red w3-block">Cancel</a>
+						</div>
+						<div class="w3-col m4 l4">
+							<button type="button"
+								class="w3-btn w3-orange w3-text-white w3-block" (click)="clear()">Clear</button>
+						</div>
+						<div class="w3-col m4 l4">
+							<button type="submit" class="w3-btn w3-green w3-block">Update</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<!-- Project detail -->
+		<div class="w3-row" *ngIf="detailMode">		
+			<div class="w3-col m12 l12">
+				<article>
+				  <h1>{{project.name}}</h1>
+				  <p>{{project.description}}</p>
+				</article>
+				<div class="w3-responsive" *ngIf="project.employees.length > 0">
+					<p class="w3-large">Employees</p>
+					<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
+						<thead>
+							<tr class="w3-row">
+								<th class="w3-col m4 l4">Name</th>
+								<th class="w3-col m4 l4">Email</th>
+								<th class="w3-col m4 l4">Address</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="w3-row" *ngFor="let employee of project.employees">
+								<td class="w3-col l4">{{employee.name}}</td>
+								<td class="w3-col l4">{{employee.email}}</td>
+								<td class="w3-col l4">{{employee.address}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Delete project modal -->
+	<div id="deleteProjectModal" class="w3-modal w3-card-4">
+		<div class="w3-modal-content w3-animate-zoom w3-card-4">
+			<header class="w3-container w3-blue w3-text-white">
+				<span class="w3-button w3-display-topright w3-hover-red">&times;</span>
+				<h4>Delete Project</h4>
+			</header>
+			<div class="w3-container">
+				<p>Are you really want to delete the project?</p>
+			</div>
+			<ul class="w3-ul w3-border-top">
+				<li class="w3-right-align">
+					<button class="w3-button w3-grey">Cancel</button>
+					<button class="w3-button w3-red">Yes</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

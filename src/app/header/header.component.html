@@ -1,0 +1,23 @@
+<div class="w3-container-fluid">
+	<div class="w3-row w3-center w3-blue w3-text-white">
+		<h4>
+			<b>EMS</b>
+		</h4>
+		<p>Welcome to Employee Management System</p>
+	</div>
+	<div class="w3-bar w3-white">
+		<div class="w3-col m6 l6 w3-bar-item w3-left-align">
+			{{today | date:'medium'}}
+		</div>
+		<div class="w3-col m6 l6 w3-bar-item w3-right-align">
+			<p *ngIf="isUserLoggedIn(); then temp1 else temp2"></p>
+		</div>
+	</div>
+</div>
+<ng-template #temp1>
+	<a class="w3-button w3-text-blue" [routerLink]="['/dashboard']"> Home</a>
+</ng-template>
+<ng-template #temp2>
+	<a class="w3-button w3-text-blue" [routerLink]="['/login']">Login</a> &nbsp; <a class="w3-button w3-text-blue" [routerLink]="['/signup']">Signup</a>
+</ng-template>
+

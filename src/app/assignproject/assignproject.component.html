@@ -1,0 +1,52 @@
+<div class="w3-row">
+	<div class="w3-col m6 l2 w3-padding" *ngIf="projects && projects.length==0">
+		<p>You have not added any project till now.</p>
+	</div>
+	<div class="w3-col m6 l2 w3-padding" *ngIf="projects && projects.length>0">
+		<div class="w3-large">
+			<p>Project</p>
+		</div>
+		<div class="row">
+			<p>Please select the project</p>
+		</div>
+		<div class="row">
+			<select class="w3-select w3-border" name="option" (change)="changeProject()" [(ngModel)]="selectedProject" >
+				<option *ngFor="let project of projects" [id]="project.id" [ngValue]="project" >{{project.name}}</option>
+			</select>
+		</div>
+	</div>
+	<div class="w3-col m6 l3 w3-padding" *ngIf="projects && employees && projects.length>0 && employees.length==0">
+		<p>You have not added any employee till now.</p>
+	</div>
+	<div *ngIf="employees && employees.length>0">
+		<div class="w3-col m6 l3 w3-padding" *ngIf="selectedProject">
+			<div class="w3-large">
+				<p>Employee</p>
+			</div>
+			<div class="w3-responsive w3-border" style="height: 300px; overflow: auto;">
+				<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
+					<tbody>
+						<tr class="w3-row" *ngFor="let employee of employees">
+							<label for="chkEmployee_{{employee.id}}" class="w3-padding">
+								<input id="chkEmployee_{{employee.id}}" type="checkbox" [checked]="selection.indexOf(employee) > -1" (change)="toggleSelection(employee)" />
+								{{employee.name}}
+							</label>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="w3-row w3-margin-top">
+				<div class="w3-col m4 l4">
+					<a (click)="cancel()" class="w3-btn w3-red w3-block">Cancel</a>
+				</div>
+				<div class="w3-col m4 l4">
+					<button type="button"
+						class="w3-btn w3-orange w3-text-white w3-block" (click)="clear()">Clear</button>
+				</div>
+				<div class="w3-col m4 l4">
+					<button type="button" class="w3-btn w3-green w3-block" (click)="assignEmployeesToProject()" >Assign</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

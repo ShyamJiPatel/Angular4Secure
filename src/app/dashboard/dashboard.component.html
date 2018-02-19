@@ -1,0 +1,29 @@
+<div class="w3-container">
+	<div class="w3-card-4">
+		<div class="w3-bar w3-light-grey">
+			<a class="w3-bar-item w3-button" [routerLink]="['employee']">Employee</a>
+			<a class="w3-bar-item w3-button" [routerLink]="['project']">Project</a>
+			<a class="w3-bar-item w3-button" [routerLink]="['manageproject']">Project Management</a>
+			<div class="w3-dropdown-hover w3-right">
+				<button class="w3-button"><i class="glyphicon glyphicon-user w3-large"></i></button>
+				<div class="w3-dropdown-content w3-bar-block w3-card-4" style="right: 15px;">
+					<div class="w3-card-4 w3-padding">
+						<img src="../../assets/images/profile.JPG" alt="Jane" width="200px" height="200px" >
+						<h2>{{activeUserName.name}}</h2>
+						<p class="w3-text-grey">{{activeUserName.username}}</p>
+						<p class="w3-padding">
+							<a>Change password</a>
+							<a class="w3-margin-left" (click)="logoutUser()">Logout</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="w3-row w3-padding w3-left-align">
+			<div style="height: 600px;">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+		
+	</div>
+</div>

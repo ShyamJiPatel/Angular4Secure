@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('../node_modules/w3-css/w3.css');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
+
+a{
+	text-decoration:none;
+	font-family: verdana;
+	color: #2196f3;
+}
+
+a:hover {
+	cursor: pointer;
+}
