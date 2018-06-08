@@ -22,6 +22,7 @@ import { ProjectFilterPipe } from './project/projectfilter.pipe';
 import { EmployeefilterPipe } from './employee/employeefilter.pipe';
 import { AppService } from './app.service';
 import { DashboardDefaultComponent } from './dashboard-default/dashboard-default.component';
+import { StorageServiceModule} from 'angular-webstorage-service';
 
 const appRoutes: Routes = [
 	{ path: '', component: LoginComponent },
@@ -61,7 +62,8 @@ const appRoutes: Routes = [
     BrowserModule,
 	HttpModule,
 	FormsModule,
-	ReactiveFormsModule
+  ReactiveFormsModule,
+  StorageServiceModule
   ],
   providers: [UserService, ProjectService, EmployeeService, AuthGuard, AppService],
   bootstrap: [AppComponent]
